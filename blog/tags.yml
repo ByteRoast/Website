@@ -37,3 +37,8 @@ pwa:
   label: pwa
   permalink: /pwa
   description: All about Progressive Web Apps
+
+discontinued:
+  label: discontinued
+  permalink: /discontinued
+  description: Projects that are no longer maintained
