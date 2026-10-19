@@ -20,8 +20,8 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/blog/music-sharity-1.0.0">
-            Music Sharity is out!
+            to="/blog/roastgate-0.1.0">
+            Roastgate is out!
           </Link>
         </div>
       </div>
