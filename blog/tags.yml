@@ -42,3 +42,28 @@ discontinued:
   label: discontinued
   permalink: /discontinued
   description: Projects that are no longer maintained
+
+roastgate:
+  label: roastgate
+  permalink: /roastgate
+  description: Updates, releases and news about Roastgate, the self-hosted web UI that drives your nginx
+
+nginx:
+  label: nginx
+  permalink: /nginx
+  description: All about nginx posts
+
+docker:
+  label: docker
+  permalink: /docker
+  description: All about Docker posts
+
+dotnet:
+  label: dotnet
+  permalink: /dotnet
+  description: All about .NET posts
+
+self_hosted:
+  label: self-hosted
+  permalink: /self-hosted
+  description: All about self-hosted software
