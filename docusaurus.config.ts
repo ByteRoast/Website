@@ -82,6 +82,7 @@ const config: Config = {
         src: 'img/logo.svg',
       },
       items: [
+        {to: '/docs', label: 'Docs', position: 'left'},
         {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/byteroast',
@@ -96,6 +97,10 @@ const config: Config = {
         {
           title: 'More',
           items: [
+            {
+              label: 'Docs',
+              to: '/docs',
+            },
             {
               label: 'Blog',
               to: '/blog',
