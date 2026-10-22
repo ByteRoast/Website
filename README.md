@@ -18,13 +18,13 @@ This command starts a local development server and opens up a browser window. Mo
 
 ### Working on a translation
 
-The site is available in English (default) and French. The development server only serves **one locale at a time**, so switching language with the locale dropdown leads to a "Page not found". To work on the French version, start the server with:
+The site is available in English (default), French (`fr`) and German (`de`). The development server only serves **one locale at a time**, so switching language with the locale dropdown leads to a "Page not found". To work on a translation, start the server with its locale:
 
 ```bash
-pnpm run start --locale fr
+pnpm run start --locale fr   # or --locale de
 ```
 
-To try the locale dropdown with both languages, build the site and serve it:
+To try the locale dropdown with all languages, build the site and serve it:
 
 ```bash
 pnpm run build
@@ -33,7 +33,7 @@ pnpm run serve
 
 ## Translations
 
-French translations live in `i18n/fr/`:
+Translations live in `i18n/<locale>/` (`i18n/fr/`, `i18n/de/`):
 
 | Path                                          | Content                                            |
 |-----------------------------------------------|----------------------------------------------------|
@@ -44,9 +44,9 @@ French translations live in `i18n/fr/`:
 
 - A translated page mirrors the path of the English one (`docs/roastgate/installation.md` → `i18n/fr/docusaurus-plugin-content-docs/current/roastgate/installation.md`). A page without translation falls back to English.
 - Keep the same `slug` in the front matter, so `/blog/roastgate-0.1.0` becomes `/fr/blog/roastgate-0.1.0`.
-- Do not copy images into `i18n/`: reference the English ones with the `@site/` prefix, for example `![Dashboard](@site/docs/roastgate/img/dashboard.png)` or `require('@site/blog/2026-01-10-music-sharity/home-page.png')`. Both locales then share a single copy.
+- Do not copy images into `i18n/`: reference the English ones with the `@site/` prefix, for example `![Dashboard](@site/docs/roastgate/img/dashboard.png)` or `require('@site/blog/2026-01-10-music-sharity/home-page.png')`. All locales then share a single copy.
 - When a translated heading is the target of a link (`./maintenance.md#back-up-the-data`), keep the English anchor with `## Sauvegarder les données {/* #back-up-the-data */}`. The `{#id}` syntax breaks the build with the `future.v4` flag.
-- After adding labels to the config (navbar, footer, sidebar categories), run `pnpm run write-translations --locale fr` to add them to the JSON files.
+- After adding labels to the config (navbar, footer, sidebar categories), run `pnpm run write-translations --locale fr` (and `--locale de`) to add them to the JSON files.
 
 ## Build
 
