@@ -1,6 +1,7 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
+import Translate from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
@@ -21,7 +22,9 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/blog/roastgate-0.1.0">
-            Roastgate is out!
+            <Translate id="homepage.mainButton" description="The main button of the home page">
+              Roastgate is out!
+            </Translate>
           </Link>
         </div>
       </div>

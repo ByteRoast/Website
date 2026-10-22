@@ -325,5 +325,27 @@
   "theme.tags.tagsPageTitle": {
     "message": "Tags",
     "description": "The title of the tag list page"
+  },
+  "homepage.mainButton": {
+    "message": "Roastgate est disponible !",
+    "description": "The main button of the home page"
+  },
+  "homepage.features.openSource.title": {
+    "message": "Open Source"
+  },
+  "homepage.features.openSource.description": {
+    "message": "Notre objectif est de créer des projets open source accessibles au plus grand nombre."
+  },
+  "homepage.features.privacy.title": {
+    "message": "Respect de la vie privée"
+  },
+  "homepage.features.privacy.description": {
+    "message": "Nous ne collectons, ne pistons et ne stockons pas vos données. Votre vie privée est garantie par conception, pas par promesse."
+  },
+  "homepage.features.community.title": {
+    "message": "Porté par la communauté"
+  },
+  "homepage.features.community.description": {
+    "message": "Conçus par des développeurs, pour des développeurs. Vos contributions et vos retours façonnent nos projets."
   }
 }

@@ -1,6 +1,7 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
+import Translate, {translate} from '@docusaurus/Translate';
 import styles from './styles.module.css';
 
 type FeatureItem = {
@@ -11,29 +12,35 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Open Source',
+    title: translate({id: 'homepage.features.openSource.title', message: 'Open Source'}),
     Svg: require('@site/static/img/undraw_open_source.svg').default,
     description: (
       <>
-        Our goal is to create Open Source projects widely accessible.
+        <Translate id="homepage.features.openSource.description">
+          Our goal is to create Open Source projects widely accessible.
+        </Translate>
       </>
     ),
   },
   {
-    title: 'Privacy Focused',
+    title: translate({id: 'homepage.features.privacy.title', message: 'Privacy Focused'}),
       Svg: require('@site/static/img/undraw_security.svg').default,
       description: (
         <>
-          We don't collect, track, or store your data. Your privacy is guaranteed by design, not by promise.
+          <Translate id="homepage.features.privacy.description">
+            We don't collect, track, or store your data. Your privacy is guaranteed by design, not by promise.
+          </Translate>
         </>
       )
   },
   {
-    title: 'Community Driven',
+    title: translate({id: 'homepage.features.community.title', message: 'Community Driven'}),
     Svg: require('@site/static/img/undraw_online_community.svg').default,
     description: (
       <>
-        Built by developers, for developers. Your contributions and feedback shape our projects.
+        <Translate id="homepage.features.community.description">
+          Built by developers, for developers. Your contributions and feedback shape our projects.
+        </Translate>
       </>
     ),
   },
