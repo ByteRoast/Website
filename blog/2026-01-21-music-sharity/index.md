@@ -7,7 +7,7 @@ tags: [release, music_sharity, android, windows, linux, flutter, pwa]
 
 New update for **Music Sharity** - SoundCloud support, Splashscreens, Better Tidal link recognition & Copy-to-clipboard on Desktop/Web
 
-<!-- truncate -->
+{/* truncate */}
 
 ## What's new?
 

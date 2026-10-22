@@ -7,7 +7,7 @@ tags: [release, roastgate, nginx, docker, dotnet, self_hosted]
 
 The first release of **Roastgate** is out: a self-hosted web UI that drives the nginx already installed on your server. Your `/etc/nginx` stays the source of truth.
 
-<!-- truncate -->
+{/* truncate */}
 
 ## What is Roastgate?
 

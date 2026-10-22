@@ -7,7 +7,7 @@ tags: [release, roastgate, nginx, docker, dotnet, self_hosted]
 
 **Roastgate 0.2.0** is out: you can now choose what visitors outside your whitelists get, instead of nginx's default 403.
 
-<!-- truncate -->
+{/* truncate */}
 
 ## Choose how refused visitors are answered
 

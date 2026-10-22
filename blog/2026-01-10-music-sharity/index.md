@@ -7,7 +7,7 @@ tags: [release, music_sharity, android, windows, linux, flutter, pwa]
 
 I'm excited to announce the first release of **Music Sharity** - a cross-platform app that converts music links between different streaming services instantly!
 
-<!-- truncate -->
+{/* truncate */}
 
 ## What is Music Sharity?
 

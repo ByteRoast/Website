@@ -7,7 +7,7 @@ tags: [release, music_sharity, android, windows, linux, flutter, pwa]
 
 Patch update for **Music Sharity** - Fixing an issue with Android sharing
 
-<!-- truncate -->
+{/* truncate */}
 
 ## Bug fix
 

@@ -7,7 +7,7 @@ tags: [music_sharity, discontinued]
 
 **Music Sharity** is officially discontinued. The repository is now archived and the project is no longer maintained.
 
-<!-- truncate -->
+{/* truncate */}
 
 ## Why?
 
