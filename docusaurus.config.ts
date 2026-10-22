@@ -33,7 +33,11 @@ const config: Config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'fr'],
+    localeConfigs: {
+      en: {label: 'English', htmlLang: 'en-US'},
+      fr: {label: 'Français', htmlLang: 'fr-FR'},
+    },
   },
 
   presets: [
@@ -85,6 +89,10 @@ const config: Config = {
       items: [
         {to: '/docs', label: 'Docs', position: 'left'},
         {to: '/blog', label: 'Blog', position: 'left'},
+        {
+          type: 'localeDropdown',
+          position: 'right',
+        },
         {
           href: 'https://github.com/byteroast',
           label: 'GitHub',

@@ -1,0 +1,69 @@
+hello:
+  label: Hello
+  permalink: /hello
+  description: Description du tag Hello
+
+release:
+  label: release
+  permalink: /releases
+  description: Liste de toutes les releases
+
+music_sharity:
+  label: music sharity
+  permalink: /music-sharity
+  description: Mises à jour, releases et actualités de Music Sharity, l'application multiplateforme qui convertit les liens musicaux entre services de streaming
+
+android:
+  label: android
+  permalink: /android
+  description: Tous les articles sur Android
+
+flutter:
+  label: flutter
+  permalink: /flutter
+  description: Tous les articles sur Flutter
+
+linux:
+  label: linux
+  permalink: /linux
+  description: Tous les articles sur Linux
+
+windows:
+  label: windows
+  permalink: /windows
+  description: Tous les articles sur Windows
+
+pwa:
+  label: pwa
+  permalink: /pwa
+  description: Tout sur les Progressive Web Apps
+
+discontinued:
+  label: discontinued
+  permalink: /discontinued
+  description: Projets qui ne sont plus maintenus
+
+roastgate:
+  label: roastgate
+  permalink: /roastgate
+  description: Mises à jour, releases et actualités de Roastgate, l'interface web auto-hébergée qui pilote votre nginx
+
+nginx:
+  label: nginx
+  permalink: /nginx
+  description: Tous les articles sur nginx
+
+docker:
+  label: docker
+  permalink: /docker
+  description: Tous les articles sur Docker
+
+dotnet:
+  label: dotnet
+  permalink: /dotnet
+  description: Tous les articles sur .NET
+
+self_hosted:
+  label: self-hosted
+  permalink: /self-hosted
+  description: Tout sur les logiciels auto-hébergés

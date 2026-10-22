@@ -16,6 +16,38 @@ pnpm run start
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
+### Working on a translation
+
+The site is available in English (default) and French. The development server only serves **one locale at a time**, so switching language with the locale dropdown leads to a "Page not found". To work on the French version, start the server with:
+
+```bash
+pnpm run start --locale fr
+```
+
+To try the locale dropdown with both languages, build the site and serve it:
+
+```bash
+pnpm run build
+pnpm run serve
+```
+
+## Translations
+
+French translations live in `i18n/fr/`:
+
+| Path                                          | Content                                            |
+|-----------------------------------------------|----------------------------------------------------|
+| `docusaurus-plugin-content-blog/`             | blog posts and `tags.yml`                          |
+| `docusaurus-plugin-content-docs/current/`     | documentation pages                                |
+| `docusaurus-theme-classic/*.json`             | navbar and footer labels                           |
+| `docusaurus-plugin-content-*.json`, `code.json` | sidebar, blog and theme labels                   |
+
+- A translated page mirrors the path of the English one (`docs/roastgate/installation.md` → `i18n/fr/docusaurus-plugin-content-docs/current/roastgate/installation.md`). A page without translation falls back to English.
+- Keep the same `slug` in the front matter, so `/blog/roastgate-0.1.0` becomes `/fr/blog/roastgate-0.1.0`.
+- Do not copy images into `i18n/`: reference the English ones with the `@site/` prefix, for example `![Dashboard](@site/docs/roastgate/img/dashboard.png)` or `require('@site/blog/2026-01-10-music-sharity/home-page.png')`. Both locales then share a single copy.
+- When a translated heading is the target of a link (`./maintenance.md#back-up-the-data`), keep the English anchor with `## Sauvegarder les données {/* #back-up-the-data */}`. The `{#id}` syntax breaks the build with the `future.v4` flag.
+- After adding labels to the config (navbar, footer, sidebar categories), run `pnpm run write-translations --locale fr` to add them to the JSON files.
+
 ## Build
 
 ```bash

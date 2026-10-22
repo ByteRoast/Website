@@ -1,0 +1,10 @@
+{
+  "version.label": {
+    "message": "Suivant",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Roastgate": {
+    "message": "Roastgate",
+    "description": "The label for category 'Roastgate' in sidebar 'tutorialSidebar'"
+  }
+}
