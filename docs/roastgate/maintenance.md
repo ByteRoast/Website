@@ -19,7 +19,7 @@ Download the compose file again (see [Install](./installation.md#install)) only 
 
 If you built from source: `git pull`, then `docker compose up -d --build`.
 
-:::warning Alpha
+:::warning[Alpha]
 Back up the data volume before each update: the database schema can change between `0.x` versions.
 :::
 

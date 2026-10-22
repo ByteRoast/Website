@@ -70,7 +70,7 @@ You can also install it as a Progressive Web App (PWA) on Android:
 
 Download both from the [GitHub Releases page](https://github.com/ByteRoast/music-sharity/releases).
 
-:::warning Platform Availability
+:::warning[Platform Availability]
 iOS and macOS builds are functional but not officially maintained due to hardware limitations. Community contributions are welcome!
 :::
 
@@ -115,7 +115,7 @@ Music Sharity is built with privacy and transparency as core principles:
 - No tracking or analytics
 - Fully open source (GPL v3)
 
-:::info Why a proxy for web?
+:::info[Why a proxy for web?]
 Web browsers enforce CORS (Cross-Origin Resource Sharing) policies that prevent direct API calls to external services. The Cloudflare Worker proxy exists solely to bypass this browser limitation while maintaining our zero-logging privacy commitment.
 :::
 

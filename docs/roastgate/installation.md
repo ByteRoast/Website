@@ -99,7 +99,7 @@ ssh -L 8181:127.0.0.1:8181 user@server
 
 Then open [http://127.0.0.1:8181](http://127.0.0.1:8181) in your browser.
 
-:::danger Keep it private
+:::danger[Keep it private]
 Roastgate controls your web server: whoever controls Roastgate is, in practice, root on the host. Never publish port `8181` on a public address. To reach it without a tunnel, use a VPN, or [put it behind nginx](./account-security.md#reach-roastgate-through-nginx) with HTTPS and a whitelist.
 :::
 
@@ -123,7 +123,7 @@ docker compose pull
 docker compose up -d
 ```
 
-:::warning Unstable
+:::warning[Unstable]
 The `dev` image gets the changes first and can break. Both files use the same container and the same `roastgate-data` volume, so switching keeps your account. Going back from `dev` to `latest` is not guaranteed to work: `dev` may already have upgraded the database to a schema that `latest` does not know. **[Back up the volume](./maintenance.md#back-up-the-data) before you try `dev`.**
 :::
 

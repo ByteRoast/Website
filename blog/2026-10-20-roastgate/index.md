@@ -73,7 +73,7 @@ docker compose up -d
 
 The compose file only lost two comments in this release: there is no need to download it again.
 
-:::warning Alpha
+:::warning[Alpha]
 Roastgate is still in its `0.x` alpha releases. Back up the `roastgate-data` volume before updating:
 
 ```bash

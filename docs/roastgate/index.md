@@ -15,7 +15,7 @@ Roastgate is a web UI that drives the **nginx installed on your server**. It run
 
 Roastgate never uses a format of its own: it reads and writes the regular nginx files. Your `/etc/nginx` stays the source of truth, so you can keep editing the files by hand, and stop using Roastgate at any time without losing anything.
 
-:::warning Alpha
+:::warning[Alpha]
 Roastgate is in its `0.x` alpha releases: settings, the database schema and the behaviour can change between versions. [Back up the data volume](./maintenance.md#back-up-the-data) before each update.
 :::
 

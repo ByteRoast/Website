@@ -22,7 +22,7 @@ The mode is chosen during the [setup](./first-start.md#3-paths-and-options) and 
 
 In embedded mode, the page shows the time and result of the last automatic check.
 
-:::warning Only one renewer
+:::warning[Only one renewer]
 If you use the embedded certbot while certbot is also installed on the host, disable the host's certbot timer, or switch to host mode. The setup diagnostics warn you about it.
 :::
 

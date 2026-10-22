@@ -51,7 +51,7 @@ Describe the proxy or the site in a form and Roastgate writes the nginx configur
 | Cache static assets         |               | ✓    | Browsers cache static assets for 30 days.                                                 |
 | Maximum upload size         | ✓             | ✓    | Empty keeps nginx's `1m`. `0` removes the limit.                                          |
 
-:::caution Path in "Forward to"
+:::caution[Path in "Forward to"]
 If the destination has a path, it must end with a slash: `http://backend/app/`. Without it, nginx glues the path to the request.
 :::
 
@@ -67,7 +67,7 @@ If the destination has a path, it must end with a slash: `http://backend/app/`. 
 - **HSTS**: browsers insist on HTTPS for a year. Turn it on only once HTTPS works.
 - **Let the Let's Encrypt validation through**: serves the ACME webroot under `/.well-known/acme-challenge/` on port 80. Needed to issue and renew certificates, and it keeps working behind a whitelist.
 
-:::tip First certificate for a new domain
+:::tip[First certificate for a new domain]
 A certificate can only be issued once nginx answers on port 80 for the domain. Create the proxy **without HTTPS** but with **Let the Let's Encrypt validation through** ticked, [get the certificate](./certificates.md#get-a-certificate), then reopen the proxy and turn on HTTPS.
 :::
 

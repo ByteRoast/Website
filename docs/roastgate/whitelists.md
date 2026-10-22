@@ -28,7 +28,7 @@ From **Whitelists**, click **New whitelist**.
 
 Each address is validated as you type: IPv4, IPv6 and CIDR ranges. The validation is strict: `1.2`, `0x7f.0.0.1` or `10.0.0.5/24` (host bits set, which nginx silently ignores) are flagged instead of being written.
 
-:::caution Behind a reverse proxy
+:::caution[Behind a reverse proxy]
 If you reach Roastgate through a proxy, **Add my address** may show the proxy's address. Enable `ROASTGATE_TRUST_FORWARDED_HEADERS` only if Roastgate can be reached through your own proxy alone (see [environment variables](./settings-and-configuration.md#environment-variables)).
 :::
 
@@ -43,7 +43,7 @@ include /etc/nginx/whitelists/office.conf;
 deny all;
 ```
 
-:::warning `return` comes first
+:::warning[`return` comes first]
 nginx evaluates `return` before `allow` and `deny`: a `location` that only does `return 200;` ignores the whitelist.
 :::
 

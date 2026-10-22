@@ -15,7 +15,7 @@ The first release of **Roastgate** is out: a self-hosted web UI that drives the 
 
 No custom format, no hidden database of configs: Roastgate reads and writes the regular nginx files (`conf.d/`, `sites-available/`, `sites-enabled/`). You can keep editing them by hand, and stop using Roastgate at any time. Your files stay where they are.
 
-:::warning Alpha
+:::warning[Alpha]
 Roastgate is in its `0.x` alpha releases: settings, the database schema and the behaviour can change between versions. Keep a backup of the data volume before each update.
 :::
 
@@ -92,7 +92,7 @@ Roastgate controls your web server: whoever controls Roastgate is, in practice, 
 - **Session revocation**: changing the password ends every open session, on every device.
 - **Audit log** of every sign-in and failure.
 
-:::danger Keep it private
+:::danger[Keep it private]
 Keep the port on `127.0.0.1` and reach it through an SSH tunnel, a VPN, or an nginx server block protected by a whitelist and HTTPS.
 :::
 
@@ -152,7 +152,7 @@ docker compose pull
 docker compose up -d
 ```
 
-:::warning Unstable
+:::warning[Unstable]
 The `dev` image gets the changes first and can break. Both files use the same container and the same `roastgate-data` volume, so switching keeps your account. But going back from `dev` to `latest` is not guaranteed to work: `dev` may already have upgraded the database to a schema that `latest` does not know. **Back up the volume before you try `dev`.**
 :::
 
@@ -223,7 +223,7 @@ Bug reports, ideas, documentation fixes and code are all welcome. Roastgate is i
 - **Found a bug or want a feature?** Open an issue using the [issue forms](https://github.com/ByteRoast/Roastgate/issues/new/choose). For anything bigger than a small fix, wait for a reply before writing code.
 - **Want to contribute code?** Fork the repository, branch from **`dev`** and open your pull request **against `dev`**, not `main`. The [Contributing Guide](https://github.com/ByteRoast/Roastgate/blob/main/CONTRIBUTING.md) covers the code style, tests, commits and the contributor license agreement.
 
-:::danger Found a vulnerability?
+:::danger[Found a vulnerability?]
 Do not open a public issue. Report it privately through [GitHub's private vulnerability reporting](https://github.com/ByteRoast/Roastgate/security/advisories/new), as described in the [security policy](https://github.com/ByteRoast/Roastgate/blob/main/SECURITY.md). Only the latest release and the `dev` image receive security fixes.
 :::
 

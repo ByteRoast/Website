@@ -48,7 +48,7 @@ A passkey works in two ways:
 - **On its own**: click **Sign in with a passkey** on the sign-in page, no password needed.
 - **As the second step**, after the password, in place of the authentication code.
 
-:::warning Once a passkey exists, the password alone is not enough
+:::warning[Once a passkey exists, the password alone is not enough]
 After the password, Roastgate always asks for a passkey (or a code, if two-factor is on).
 :::
 
