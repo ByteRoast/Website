@@ -347,5 +347,9 @@
   },
   "homepage.features.community.description": {
     "message": "Conçus par des développeurs, pour des développeurs. Vos contributions et vos retours façonnent nos projets."
+  },
+  "homepage.metaDescription": {
+    "message": "Byte Roast crée des outils open source auto-hébergés. Découvrez Roastgate, une interface web pour nginx, avec guides et actualités des versions.",
+    "description": "The meta description of the home page"
   }
 }

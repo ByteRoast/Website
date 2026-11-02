@@ -3,6 +3,9 @@ slug: music-sharity-1.1.1
 title: Music Sharity 1.1.1
 authors: [sikelio]
 tags: [release, music_sharity, android, windows, linux, flutter, pwa]
+description: "Release-Notes zu Music Sharity 1.1.1: Fehlerbehebungen und Verbesserungen am plattformübergreifenden Musiklink-Konverter."
+keywords: [music sharity, release notes, bug fixes, music links, flutter]
+image: /img/byteroast-social-card.png
 ---
 
 Patch-Update für **Music Sharity**: Behebung eines Problems beim Teilen unter Android

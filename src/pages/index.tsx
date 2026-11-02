@@ -1,7 +1,7 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
-import Translate from '@docusaurus/Translate';
+import Translate, {translate} from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
@@ -37,7 +37,11 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title={siteConfig.title}
-      description="Description will go into a meta tag in <head />">
+      description={translate({
+        id: 'homepage.metaDescription',
+        message: 'Byte Roast builds open-source, self-hosted tools. Discover Roastgate, a web UI for nginx, with guides and release news.',
+        description: 'The meta description of the home page',
+      })}>
       <HomepageHeader />
       <main>
         <HomepageFeatures />

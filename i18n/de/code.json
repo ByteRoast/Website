@@ -347,5 +347,9 @@
   "theme.tags.tagsPageTitle": {
     "message": "Tags",
     "description": "The title of the tag list page"
+  },
+  "homepage.metaDescription": {
+    "message": "Byte Roast entwickelt Open-Source-Tools zum Selbst-Hosting. Entdecke Roastgate, eine Weboberfläche für nginx, mit Anleitungen und Release-News.",
+    "description": "The meta description of the home page"
   }
 }

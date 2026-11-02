@@ -3,6 +3,9 @@ slug: roastgate-0.2.0
 title: Roastgate 0.2.0
 authors: [sikelio]
 tags: [release, roastgate, nginx, docker, dotnet, self_hosted]
+description: "Release notes for Roastgate 0.2.0: what's new in the self-hosted web UI for nginx."
+keywords: [roastgate, release notes, nginx, docker, self-hosted]
+image: /img/byteroast-social-card.png
 ---
 
 **Roastgate 0.2.0** is out: you can now choose what visitors outside your whitelists get, instead of nginx's default 403.

@@ -3,6 +3,9 @@ slug: music-sharity-1.1.0
 title: Music Sharity 1.1.0
 authors: [sikelio]
 tags: [release, music_sharity, android, windows, linux, flutter, pwa]
+description: "Notes de version de Music Sharity 1.1.0 : les nouveautés du convertisseur de liens musicaux multiplateforme."
+keywords: [music sharity, release notes, music links, android, windows, linux, flutter]
+image: /img/byteroast-social-card.png
 ---
 
 Nouvelle mise à jour de **Music Sharity** : prise en charge de SoundCloud, écrans de démarrage, meilleure reconnaissance des liens Tidal et copie dans le presse-papiers sur Desktop/Web

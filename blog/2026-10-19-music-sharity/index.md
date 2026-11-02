@@ -3,6 +3,9 @@ slug: music-sharity-discontinued
 title: Music Sharity is discontinued
 authors: [sikelio]
 tags: [music_sharity, discontinued]
+description: "Music Sharity is discontinued: why development stops and what it means for current users."
+keywords: [music sharity, discontinued, end of life]
+image: /img/byteroast-social-card.png
 ---
 
 **Music Sharity** is officially discontinued. The repository is now archived and the project is no longer maintained.

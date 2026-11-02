@@ -3,6 +3,9 @@ slug: roastgate-0.1.0
 title: Présentation de Roastgate 0.1.0
 authors: [sikelio]
 tags: [release, roastgate, nginx, docker, dotnet, self_hosted]
+description: "Roastgate 0.1.0 est disponible : une interface web auto-hébergée pour gérer reverse proxies, sites, listes blanches d'IP et certificats Let's Encrypt sur votre nginx existant."
+keywords: [roastgate, nginx, reverse proxy, let's encrypt, docker, self-hosted, web ui]
+image: /img/byteroast-social-card.png
 ---
 
 La première version de **Roastgate** est sortie : une interface web auto-hébergée qui pilote le nginx déjà installé sur votre serveur. Votre `/etc/nginx` reste la source de vérité.

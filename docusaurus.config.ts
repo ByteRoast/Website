@@ -28,6 +28,34 @@ const config: Config = {
 
   onBrokenLinks: 'throw',
 
+  headTags: [
+    {
+      tagName: 'script',
+      attributes: {type: 'application/ld+json'},
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'Organization',
+            '@id': 'https://byteroast.fr/#organization',
+            name: 'Byte Roast',
+            url: 'https://byteroast.fr/',
+            logo: 'https://byteroast.fr/img/logo.png',
+            sameAs: ['https://github.com/byteroast'],
+          },
+          {
+            '@type': 'WebSite',
+            '@id': 'https://byteroast.fr/#website',
+            name: 'Byte Roast',
+            url: 'https://byteroast.fr/',
+            publisher: {'@id': 'https://byteroast.fr/#organization'},
+            inLanguage: ['en-US', 'fr-FR', 'de-DE'],
+          },
+        ],
+      }),
+    },
+  ],
+
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
@@ -67,6 +95,13 @@ const config: Config = {
           onInlineAuthors: 'warn',
           onUntruncatedBlogPosts: 'warn',
         },
+        sitemap: {
+          lastmod: 'date',
+          changefreq: 'weekly',
+          priority: 0.5,
+          filename: 'sitemap.xml',
+          ignorePatterns: ['/tags/**'],
+        },
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -75,8 +110,12 @@ const config: Config = {
   ],
 
   themeConfig: {
-    // Replace with your project's social card
-    image: 'img/docusaurus-social-card.jpg',
+    image: 'img/byteroast-social-card.png',
+    metadata: [
+      {name: 'keywords', content: 'byte roast, roastgate, nginx, docker, self-hosted, reverse proxy, open source'},
+      {name: 'twitter:card', content: 'summary_large_image'},
+      {name: 'theme-color', content: '#EE8A26'},
+    ],
     colorMode: {
       respectPrefersColorScheme: true,
       defaultMode: 'light',
@@ -84,7 +123,7 @@ const config: Config = {
     navbar: {
       title: 'Byte Roast',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'Byte Roast logo',
         src: 'img/logo.svg',
       },
       items: [

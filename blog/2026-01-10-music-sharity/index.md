@@ -3,6 +3,9 @@ slug: music-sharity-1.0.0
 title: Introducing Music Sharity 1.0.0
 authors: [sikelio]
 tags: [release, music_sharity, android, windows, linux, flutter, pwa]
+description: "Music Sharity 1.0.0 is out: a cross-platform app for Android, Windows, Linux and the web that converts music links between streaming services."
+keywords: [music sharity, music links, streaming, android, windows, linux, flutter, pwa]
+image: /img/byteroast-social-card.png
 ---
 
 I'm excited to announce the first release of **Music Sharity** - a cross-platform app that converts music links between different streaming services instantly!

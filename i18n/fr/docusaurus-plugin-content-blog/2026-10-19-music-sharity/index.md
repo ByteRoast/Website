@@ -3,6 +3,9 @@ slug: music-sharity-discontinued
 title: Music Sharity est abandonné
 authors: [sikelio]
 tags: [music_sharity, discontinued]
+description: "Music Sharity est abandonné : pourquoi le développement s'arrête et ce que cela change pour les utilisateurs actuels."
+keywords: [music sharity, discontinued, end of life]
+image: /img/byteroast-social-card.png
 ---
 
 **Music Sharity** est officiellement abandonné. Le dépôt est désormais archivé et le projet n'est plus maintenu.
