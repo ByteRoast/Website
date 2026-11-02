@@ -144,7 +144,7 @@ const config: Config = {
       style: 'light',
       links: [
         {
-          title: 'More',
+          title: 'Helpful links',
           items: [
             {
               label: 'Docs',
@@ -154,9 +154,23 @@ const config: Config = {
               label: 'Blog',
               to: '/blog',
             },
+          ],
+        },
+        {
+          title: 'Our Work',
+          items: [
             {
-              label: 'GitHub',
+              label: 'Public Projects',
               href: 'https://github.com/byteroast',
+            },
+          ],
+        },
+        {
+          title: 'My other work',
+          items: [
+            {
+              label: 'Frenchy Apps 42',
+              href: 'https://frapp42.fr/',
             },
           ],
         },
