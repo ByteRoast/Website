@@ -49,11 +49,57 @@ Beschreibe den Proxy oder die Site in einem Formular und Roastgate schreibt die 
 | Root directory              |               | ✓    | Der Ordner mit deinen Dateien, **so wie nginx ihn auf dem Host sieht**.                   |
 | Single page application     |               | ✓    | Unbekannte Pfade liefern `index.html` aus (React, Vue, Angular …).                        |
 | Cache static assets         |               | ✓    | Browser cachen statische Ressourcen 30 Tage lang.                                         |
+| Browsable directory listing |               | ✓    | Listet die Dateien von Ordnern ohne Index auf, siehe [Verzeichnisliste](#directory-listing). |
 | Maximum upload size         | ✓             | ✓    | Leer behält das `1m` von nginx. `0` hebt das Limit auf.                                   |
 
 :::caution[Pfad in „Forward to“]
 Wenn das Ziel einen Pfad hat, muss er mit einem Schrägstrich enden: `http://backend/app/`. Ohne ihn hängt nginx den Pfad an die Anfrage an.
 :::
+
+### Verzeichnisliste {/* #directory-listing */}
+
+**Browsable directory listing (fancyindex)** macht aus einer Site eine Dateiliste: Ordner ohne `index.html` zeigen ihre Dateien mit Größe und Datum. Dafür wird das nginx-Modul [fancyindex](https://github.com/aperezdc/ngx-fancyindex) verwendet, das nicht Teil von nginx selbst ist.
+
+Roastgate liest die Module, die dein nginx lädt (`nginx -T`), und bietet die Liste nur an, wenn fancyindex dazugehört:
+
+- **Modul nicht geladen**: Der Schalter ist ausgegraut und der Assistent sagt dir, was du installieren musst. Unter Debian und Ubuntu:
+
+  ```bash
+  sudo apt install libnginx-mod-http-fancyindex
+  sudo systemctl reload nginx
+  ```
+
+  Öffne den Assistenten danach erneut.
+- **Module unbekannt** (nginx konnte nicht gefragt werden): Der Schalter bleibt verfügbar, und `nginx -t` hat beim Speichern das letzte Wort.
+
+Sobald der Schalter an ist, hat die Liste eigene Optionen:
+
+| Option                             | Standard           | Hinweise                                                                                  |
+|------------------------------------|--------------------|-------------------------------------------------------------------------------------------|
+| Default sort                       | Name               | Nach Name, Größe oder Datum, auf- oder absteigend.                                        |
+| Case-sensitive sort                | an                 | Nur angeboten, wenn dein Build des Moduls sie kennt, siehe unten.                         |
+| Directories first                  | an                 | Ordner werden vor Dateien aufgelistet.                                                    |
+| Exact file sizes                   | an                 | Aus rundet die Größen auf KiB, MiB …                                                      |
+| Local time                         | aus                | Aus zeigt die Daten in UTC.                                                               |
+| Show the path above the listing    | an                 | Kann nur ausgeschaltet werden, wenn eine Header-Datei gesetzt ist.                        |
+| Show dotfiles                      | aus                | Erfordert, dass **Block TRACE and dotfiles** aus ist: Dieser Schutz lehnt jeden Pfad mit Punkt ab. |
+| Hide symlinks                      | aus                |                                                                                           |
+| Hide the parent directory link     | aus                |                                                                                           |
+| Header file, Footer file, CSS file | leer               | URL-Pfade wie `/.nginxy/header.html`. Die Site selbst muss diese Dateien ausliefern.      |
+| Ignored names                      | leer               | Ein Name pro Zeile: Dateien und Ordner mit diesen Namen werden ausgeblendet.              |
+| Time Format                        | `%Y-%b-%d %H:%M`   | `strftime`-Platzhalter wie `%d`, `%m`, `%Y`, `%H`, `%M`.                                  |
+
+:::info[Header und Footer]
+Header und Footer brauchen außerdem das `http_addition_module` von nginx, das in den Debian- und Ubuntu-Paketen enthalten ist. Liegen ihre Dateien in einem Ordner, der mit einem Punkt beginnt (zum Beispiel ein Theme in `/.nginxy/`), lässt der Assistent diesen Ordner durch den Dotfile-Schutz.
+:::
+
+#### Builds des Moduls unterscheiden sich {/* #builds-of-the-module-differ */}
+
+Nicht jeder Build von fancyindex kennt jede Direktive, und nginx lehnt eine ganze Datei ab, die eine unbekannte nennt. Ubuntus `libnginx-mod-http-fancyindex` 0.5.2 zum Beispiel hat kein `fancyindex_case_sensitive`.
+
+Bevor Roastgate eine solche Option anbietet, fragt es deshalb nginx selbst: Es schreibt eine kleine Testkonfiguration nach `<nginx-Root>/.roastgate-probe` (standardmäßig `/etc/nginx/.roastgate-probe`), führt `nginx -t` darauf aus und löscht sie sofort wieder. Deine Konfiguration wird nie angefasst. Kennt nginx die Direktive nicht, wird die Option ausgeblendet. Kann nginx nicht gefragt werden, bleibt die Option verfügbar und `nginx -t` entscheidet beim Speichern.
+
+Die Antworten von nginx werden fünf Minuten lang behalten: Warte nach der Installation eines anderen Builds des Moduls fünf Minuten oder starte Roastgate neu.
 
 ### HTTPS {/* #https */}
 
@@ -73,7 +119,18 @@ Ein Zertifikat kann erst ausgestellt werden, wenn nginx auf Port 80 für die Dom
 
 ### Access {/* #access */}
 
-Beschränke den Proxy oder die Site auf die Adressen einer oder mehrerer [Whitelists](./whitelists.md). Alle anderen erhalten ein `403`. Kreuze die zu verwendenden Whitelists an; erstelle zuerst eine, wenn die Liste leer ist.
+Beschränke den Proxy oder die Site auf die Adressen einer oder mehrerer [Whitelists](./whitelists.md). Kreuze die zu verwendenden Whitelists an; erstelle zuerst eine, wenn die Liste leer ist.
+
+**Visitors outside the whitelists** legt fest, was alle anderen bekommen:
+
+| Auswahl                    | Antwort                      | Wann verwenden                                         |
+|----------------------------|------------------------------|--------------------------------------------------------|
+| **Forbidden** (Standard)   | `403`                        | das übliche Verhalten von nginx                        |
+| **Not found**              | `404`                        | verbirgt, dass die Site existiert                      |
+| **Close connection**       | `444`                        | nginx trennt die Verbindung, ohne etwas zu senden      |
+| **Redirect**               | `302` auf **Redirect to**    | Besucher zum Beispiel auf deine Hauptwebsite schicken  |
+
+Die Antwort ersetzt **jedes** `403` des Servers, nicht nur die der Whitelists: Auch blockierte Dotfiles und Ordner ohne Index bekommen sie. Die Let's-Encrypt-Challenge bleibt für alle erreichbar.
 
 ### Advanced
 
@@ -105,11 +162,11 @@ Die Einstellungen des Formulars werden in einem Kommentar am Anfang der generier
 
 Wenn du die Datei seitdem von Hand bearbeitet hast, warnt dich der Assistent: Speichern aus dem Formular **ersetzt deine manuellen Änderungen**. Um sie zu behalten, verwende stattdessen **edit as raw text**.
 
-## Eine handgeschriebene Konfiguration importieren
+## Eine handgeschriebene Konfiguration importieren {/* #importing-a-hand-written-config */}
 
 Eine Datei, die der Assistent nicht erstellt hat, kann trotzdem im Assistenten geöffnet werden: Klicke im Rohtext-Editor auf **import into the wizard** (oder öffne `/reverse-proxies/wizard?name=app.conf`).
 
-Ihre Einstellungen werden **aus der Datei gelesen**: Namen, Ports, Upstream, Zertifikat, Whitelists, Upload-Limit, WebSocket-Header, Timeouts, Weiterleitung. Alles, wofür das Formular kein Feld hat (andere Locations, `gzip`, `proxy_buffering` …), bleibt in den Feldern **Extra directives** des Tabs Advanced erhalten, sodass nichts verloren geht. Der Assistent listet außerdem die Standardwerte auf, die er hinzufügt und die deine Datei nicht hatte (zum Beispiel die `X-Forwarded-*`-Header).
+Ihre Einstellungen werden **aus der Datei gelesen**: Namen, Ports, Upstream, Zertifikat, Whitelists, Upload-Limit, WebSocket-Header, Timeouts, Weiterleitung, `fancyindex`-Direktiven. Alles, wofür das Formular kein Feld hat (andere Locations, `gzip`, `proxy_buffering` …), bleibt in den Feldern **Extra directives** des Tabs Advanced erhalten, sodass nichts verloren geht. Der Assistent listet außerdem die Standardwerte auf, die er hinzufügt und die deine Datei nicht hatte (zum Beispiel die `X-Forwarded-*`-Header).
 
 Das Speichern **generiert die ganze Datei neu** aus dem Formular (ein Backup wird aufbewahrt), prüfe also zuerst den Tab **Preview**. Kommentare zwischen Direktiven bleiben nicht erhalten.
 

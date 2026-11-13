@@ -49,11 +49,57 @@ Describe the proxy or the site in a form and Roastgate writes the nginx configur
 | Root directory              |               | ✓    | The folder that holds your files, **as nginx sees it on the host**.                       |
 | Single page application     |               | ✓    | Unknown paths serve `index.html` (React, Vue, Angular…).                                  |
 | Cache static assets         |               | ✓    | Browsers cache static assets for 30 days.                                                 |
+| Browsable directory listing |               | ✓    | Lists the files of folders without an index, see [Directory listing](#directory-listing). |
 | Maximum upload size         | ✓             | ✓    | Empty keeps nginx's `1m`. `0` removes the limit.                                          |
 
 :::caution[Path in "Forward to"]
 If the destination has a path, it must end with a slash: `http://backend/app/`. Without it, nginx glues the path to the request.
 :::
+
+### Directory listing
+
+**Browsable directory listing (fancyindex)** turns a site into a file listing: folders without an `index.html` show their files, with sizes and dates. It uses the [fancyindex](https://github.com/aperezdc/ngx-fancyindex) module of nginx, which is not part of nginx itself.
+
+Roastgate reads the modules your nginx loads (`nginx -T`) and only offers the listing when fancyindex is one of them:
+
+- **Module not loaded**: the switch is greyed out and the wizard tells you what to install. On Debian and Ubuntu:
+
+  ```bash
+  sudo apt install libnginx-mod-http-fancyindex
+  sudo systemctl reload nginx
+  ```
+
+  Then reopen the wizard.
+- **Modules unknown** (nginx could not be asked): the switch stays available, and `nginx -t` has the last word when you save.
+
+Once the switch is on, the listing has its own options:
+
+| Option                             | Default            | Notes                                                                                     |
+|------------------------------------|--------------------|-------------------------------------------------------------------------------------------|
+| Default sort                       | Name               | By name, size or date, ascending or descending.                                           |
+| Case-sensitive sort                | on                 | Only offered when your build of the module knows it, see below.                           |
+| Directories first                  | on                 | Folders are listed before files.                                                          |
+| Exact file sizes                   | on                 | Off rounds the sizes to KiB, MiB…                                                         |
+| Local time                         | off                | Off shows dates in UTC.                                                                   |
+| Show the path above the listing    | on                 | Can only be turned off when a header file is set.                                         |
+| Show dotfiles                      | off                | Needs **Block TRACE and dotfiles** off: that protection refuses every path with a dot.    |
+| Hide symlinks                      | off                |                                                                                           |
+| Hide the parent directory link     | off                |                                                                                           |
+| Header file, Footer file, CSS file | empty              | URL paths such as `/.nginxy/header.html`. The site itself must serve these files.         |
+| Ignored names                      | empty              | One name per line: files and folders with these names are hidden.                         |
+| Time Format                        | `%Y-%b-%d %H:%M`   | `strftime` specifiers such as `%d`, `%m`, `%Y`, `%H`, `%M`.                               |
+
+:::info[Header and footer]
+The header and the footer also need nginx's `http_addition_module`, included in the Debian and Ubuntu packages. When their files live in a folder starting with a dot (a theme in `/.nginxy/`, for example), the wizard lets that folder through the dotfile protection.
+:::
+
+#### Builds of the module differ
+
+Not every build of fancyindex knows every directive, and nginx refuses a whole file that names an unknown one. Ubuntu's `libnginx-mod-http-fancyindex` 0.5.2, for instance, has no `fancyindex_case_sensitive`.
+
+So before it offers such an option, Roastgate asks nginx itself: it writes a small test configuration in `<nginx root>/.roastgate-probe` (`/etc/nginx/.roastgate-probe` by default), runs `nginx -t` on it and deletes it right after. Your configuration is never touched. When nginx does not know the directive, the option is hidden. When nginx cannot be asked, the option stays available and `nginx -t` decides at save time.
+
+The answers of nginx are kept for five minutes: after installing another build of the module, wait five minutes or restart Roastgate.
 
 ### HTTPS
 
@@ -73,7 +119,18 @@ A certificate can only be issued once nginx answers on port 80 for the domain. C
 
 ### Access
 
-Restrict the proxy or the site to the addresses of one or more [whitelists](./whitelists.md). Everybody else gets a `403`. Tick the whitelists to use; create one first if the list is empty.
+Restrict the proxy or the site to the addresses of one or more [whitelists](./whitelists.md). Tick the whitelists to use; create one first if the list is empty.
+
+**Visitors outside the whitelists** chooses what everybody else gets:
+
+| Choice                     | Answer                       | When to use it                                         |
+|----------------------------|------------------------------|--------------------------------------------------------|
+| **Forbidden** (default)    | `403`                        | nginx's usual behaviour                                |
+| **Not found**              | `404`                        | hides that the site exists                             |
+| **Close connection**       | `444`                        | nginx drops the connection without sending anything    |
+| **Redirect**               | `302` to **Redirect to**     | send visitors to your main website, for example        |
+
+The answer replaces **every** `403` of the server, not only the whitelist ones: blocked dotfiles and folders without an index get it too. The Let's Encrypt challenge stays reachable for everyone.
 
 ### Advanced
 
@@ -109,7 +166,7 @@ If you edited the file by hand since, the wizard warns you: saving from the form
 
 A file the wizard did not create can still be opened in the wizard: click **import into the wizard** in the raw editor (or open `/reverse-proxies/wizard?name=app.conf`).
 
-Its settings are **read from the file**: names, ports, upstream, certificate, whitelists, upload limit, WebSocket headers, timeouts, redirect. Everything the form has no field for (other locations, `gzip`, `proxy_buffering`…) is kept in the **Extra directives** boxes of the Advanced tab, so nothing is lost. The wizard also lists the defaults it adds that your file did not have (for example the `X-Forwarded-*` headers).
+Its settings are **read from the file**: names, ports, upstream, certificate, whitelists, upload limit, WebSocket headers, timeouts, redirect, `fancyindex` directives. Everything the form has no field for (other locations, `gzip`, `proxy_buffering`…) is kept in the **Extra directives** boxes of the Advanced tab, so nothing is lost. The wizard also lists the defaults it adds that your file did not have (for example the `X-Forwarded-*` headers).
 
 Saving **regenerates the whole file** from the form (a backup is kept), so check the **Preview** tab first. Comments between directives are not kept.
 
