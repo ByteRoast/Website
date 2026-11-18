@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 9
 title: Account and security
 description: Two-factor authentication, passkeys, sessions, and how to reach Roastgate safely.
 ---

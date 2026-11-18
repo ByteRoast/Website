@@ -34,7 +34,7 @@ docker logs roastgate        # affiche le jeton d'installation
 
 Conservez le **jeton d'installation** affiché dans les logs : vous en aurez besoin au [premier démarrage](./first-start.md). Un nouveau jeton est généré à chaque démarrage du conteneur tant que l'installation n'est pas terminée.
 
-## Ce que fait le fichier compose
+## Ce que fait le fichier compose {/* #what-the-compose-file-does */}
 
 ```yaml title="docker-compose.yml"
 name: roastgate
@@ -54,6 +54,7 @@ services:
       - /etc/nginx:/etc/nginx
       - /etc/letsencrypt:/etc/letsencrypt
       - /var/www/certbot:/var/www/certbot
+      - /var/log/nginx:/var/log/nginx:ro
       - roastgate-data:/data
 
 volumes:
@@ -65,11 +66,12 @@ volumes:
 - **Le port est lié à `127.0.0.1`** : Roastgate n'est pas joignable depuis Internet. Gardez-le ainsi, voir [Accéder à Roastgate](#reaching-roastgate).
 - **Les volumes** :
 
-| Chemin sur l'hôte                        | Rôle                                                           |
-|------------------------------------------|----------------------------------------------------------------|
-| `/etc/nginx`                             | la configuration nginx que Roastgate lit et écrit              |
-| `/etc/letsencrypt`                       | les certificats (lus, et écrits par le certbot intégré)        |
-| `/var/www/certbot`                       | le webroot ACME utilisé par le challenge Let's Encrypt         |
+| Chemin sur l'hôte                        | Rôle                                                            |
+| ---------------------------------------- | --------------------------------------------------------------- |
+| `/etc/nginx`                             | la configuration nginx que Roastgate lit et écrit               |
+| `/etc/letsencrypt`                       | les certificats (lus, et écrits par le certbot intégré)         |
+| `/var/www/certbot`                       | le webroot ACME utilisé par le challenge Let's Encrypt          |
+| `/var/log/nginx` (lecture seule)         | les logs d'accès nginx, lus par la page [Trafic](./traffic.md)  |
 | `roastgate-data` (volume nommé, `/data`) | la base SQLite et les clés qui chiffrent les cookies de session |
 
 Si votre nginx ou votre webroot se trouvent ailleurs, modifiez la **partie gauche** de ces montages et saisissez les mêmes chemins pendant l'installation.
@@ -80,12 +82,12 @@ Les variables d'environnement commentées du fichier compose sont décrites dans
 
 L'image est publiée sur `ghcr.io/byteroast/roastgate` avec ces tags :
 
-| Tag                       | Suit                                                                                          |
-|---------------------------|-----------------------------------------------------------------------------------------------|
-| `latest`                  | la branche `main`                                                                             |
-| `0.1.0`, `0.1.0-alpha.1`… | une release                                                                                   |
+| Tag                       | Suit                                                                                                        |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `latest`                  | la branche `main`                                                                                           |
+| `0.1.0`, `0.1.0-alpha.1`… | une release                                                                                                 |
 | `0.1`, `1.2`…             | la dernière release stable de cette version mineure (les pré-releases comme les alphas ne le déplacent pas) |
-| `dev`                     | chaque push sur la branche `dev` (instable)                                                   |
+| `dev`                     | chaque push sur la branche `dev` (instable)                                                                 |
 
 Pour rester sur une version, remplacez `latest` par un tag de release dans `docker-compose.yml`.
 

@@ -13,6 +13,8 @@ Roastgate est une interface web qui pilote le **nginx installé sur votre serveu
 - **Les listes blanches d'IP** : restreindre un proxy ou un site à certaines adresses.
 - **Les certificats Let's Encrypt** : les obtenir, les renouveler et les supprimer.
 
+Elle montre aussi [d'où vient votre trafic](./traffic.md), sur une carte du monde construite à partir des logs d'accès nginx.
+
 Roastgate n'utilise jamais de format propre : elle lit et écrit les fichiers nginx classiques. Votre `/etc/nginx` reste la source de vérité, vous pouvez donc continuer à modifier les fichiers à la main, et arrêter d'utiliser Roastgate à tout moment sans rien perdre.
 
 :::warning[Alpha]
@@ -23,12 +25,12 @@ Roastgate en est à ses versions alpha `0.x` : les réglages, le schéma de la b
 
 ## Ce qu'elle gère
 
-| Élément                  | Contenu             | Emplacement                  | Actif lorsque                                    |
-|--------------------------|---------------------|------------------------------|--------------------------------------------------|
-| Reverse proxies          | blocs `server`      | `conf.d/<name>.conf`         | le fichier se termine par `.conf` (et non `.conf.disabled`) |
-| Sites                    | blocs `server`      | `sites-available/<name>`     | un lien symbolique existe dans `sites-enabled/`  |
-| Listes blanches          | lignes `allow <ip>;`| `whitelists/<name>.conf`     | une configuration l'inclut avec `include`        |
-| Certificats              | Let's Encrypt       | `/etc/letsencrypt`           | une configuration y fait référence               |
+| Élément         | Contenu              | Emplacement              | Actif lorsque                                               |
+| --------------- | -------------------- | ------------------------ | ----------------------------------------------------------- |
+| Reverse proxies | blocs `server`       | `conf.d/<name>.conf`     | le fichier se termine par `.conf` (et non `.conf.disabled`) |
+| Sites           | blocs `server`       | `sites-available/<name>` | un lien symbolique existe dans `sites-enabled/`             |
+| Listes blanches | lignes `allow <ip>;` | `whitelists/<name>.conf` | une configuration l'inclut avec `include`                   |
+| Certificats     | Let's Encrypt        | `/etc/letsencrypt`       | une configuration y fait référence                          |
 
 Les arborescences Debian et Ubuntu (`conf.d/`, `sites-available/`, `sites-enabled/`) sont prises en charge.
 

@@ -34,7 +34,7 @@ docker logs roastgate        # gibt das Setup-Token aus
 
 Bewahre das in den Logs ausgegebene **Setup-Token** auf: Du brauchst es für den [ersten Start](./first-start.md). Bei jedem Start des Containers wird ein neues erzeugt, bis die Einrichtung abgeschlossen ist.
 
-## Was die Compose-Datei macht
+## Was die Compose-Datei macht {/* #what-the-compose-file-does */}
 
 ```yaml title="docker-compose.yml"
 name: roastgate
@@ -54,6 +54,7 @@ services:
       - /etc/nginx:/etc/nginx
       - /etc/letsencrypt:/etc/letsencrypt
       - /var/www/certbot:/var/www/certbot
+      - /var/log/nginx:/var/log/nginx:ro
       - roastgate-data:/data
 
 volumes:
@@ -65,11 +66,12 @@ volumes:
 - **Der Port ist an `127.0.0.1` gebunden**: Roastgate ist aus dem Internet nicht erreichbar. Lass es so, siehe [Zugriff auf Roastgate](#reaching-roastgate).
 - **Die Volumes**:
 
-| Pfad auf dem Host                        | Zweck                                                          |
-|------------------------------------------|----------------------------------------------------------------|
-| `/etc/nginx`                             | die nginx-Konfiguration, die Roastgate liest und schreibt      |
-| `/etc/letsencrypt`                       | Zertifikate (gelesen, und vom eingebetteten certbot geschrieben) |
-| `/var/www/certbot`                       | ACME-Webroot für die Let's-Encrypt-Challenge                   |
+| Pfad auf dem Host                            | Zweck                                                                         |
+| -------------------------------------------- | ----------------------------------------------------------------------------- |
+| `/etc/nginx`                                 | die nginx-Konfiguration, die Roastgate liest und schreibt                     |
+| `/etc/letsencrypt`                           | Zertifikate (gelesen, und vom eingebetteten certbot geschrieben)              |
+| `/var/www/certbot`                           | ACME-Webroot für die Let's-Encrypt-Challenge                                  |
+| `/var/log/nginx` (schreibgeschützt)          | die nginx-Access-Logs, gelesen von der Seite [Traffic](./traffic.md)          |
 | `roastgate-data` (benanntes Volume, `/data`) | die SQLite-Datenbank und die Schlüssel, die die Sitzungscookies verschlüsseln |
 
 Wenn dein nginx oder dein Webroot woanders liegen, ändere die **linke Seite** dieser Mounts und gib während der Einrichtung dieselben Pfade an.
@@ -80,12 +82,12 @@ Die auskommentierten Umgebungsvariablen der Compose-Datei werden unter [Einstell
 
 Das Image wird unter `ghcr.io/byteroast/roastgate` mit diesen Tags veröffentlicht:
 
-| Tag                       | Folgt                                                                                         |
-|---------------------------|-----------------------------------------------------------------------------------------------|
-| `latest`                  | dem Branch `main`                                                                             |
-| `0.1.0`, `0.1.0-alpha.1`… | einem Release                                                                                 |
+| Tag                       | Folgt                                                                                              |
+| ------------------------- | -------------------------------------------------------------------------------------------------- |
+| `latest`                  | dem Branch `main`                                                                                  |
+| `0.1.0`, `0.1.0-alpha.1`… | einem Release                                                                                      |
 | `0.1`, `1.2`…             | dem neuesten stabilen Release dieser Minor-Version (Pre-Releases wie Alphas verschieben ihn nicht) |
-| `dev`                     | jedem Push auf den Branch `dev` (instabil)                                                    |
+| `dev`                     | jedem Push auf den Branch `dev` (instabil)                                                         |
 
 Um bei einer Version zu bleiben, ersetze `latest` in `docker-compose.yml` durch einen Release-Tag.
 

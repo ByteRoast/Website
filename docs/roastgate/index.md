@@ -13,6 +13,8 @@ Roastgate is a web UI that drives the **nginx installed on your server**. It run
 - **IP whitelists**: restrict a proxy or a site to some addresses.
 - **Let's Encrypt certificates**: get, renew and delete them.
 
+It also shows [where your traffic comes from](./traffic.md), on a world map built from the nginx access logs.
+
 Roastgate never uses a format of its own: it reads and writes the regular nginx files. Your `/etc/nginx` stays the source of truth, so you can keep editing the files by hand, and stop using Roastgate at any time without losing anything.
 
 :::warning[Alpha]
@@ -23,12 +25,12 @@ Roastgate is in its `0.x` alpha releases: settings, the database schema and the 
 
 ## What it manages
 
-| Area                     | Content             | Where                        | Enabled when                                     |
-|--------------------------|---------------------|------------------------------|--------------------------------------------------|
-| Reverse proxies          | `server` blocks     | `conf.d/<name>.conf`         | the file ends with `.conf` (not `.conf.disabled`) |
-| Sites                    | `server` blocks     | `sites-available/<name>`     | a symlink exists in `sites-enabled/`             |
-| Whitelists               | `allow <ip>;` lines | `whitelists/<name>.conf`     | a config `include`s it                           |
-| Certificates             | Let's Encrypt       | `/etc/letsencrypt`           | a config points at it                            |
+| Area            | Content             | Where                    | Enabled when                                      |
+| --------------- | ------------------- | ------------------------ | ------------------------------------------------- |
+| Reverse proxies | `server` blocks     | `conf.d/<name>.conf`     | the file ends with `.conf` (not `.conf.disabled`) |
+| Sites           | `server` blocks     | `sites-available/<name>` | a symlink exists in `sites-enabled/`              |
+| Whitelists      | `allow <ip>;` lines | `whitelists/<name>.conf` | a config `include`s it                            |
+| Certificates    | Let's Encrypt       | `/etc/letsencrypt`       | a config points at it                             |
 
 Debian and Ubuntu layouts (`conf.d/`, `sites-available/`, `sites-enabled/`) are supported.
 

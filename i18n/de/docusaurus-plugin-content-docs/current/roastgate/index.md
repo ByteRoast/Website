@@ -13,6 +13,8 @@ Roastgate ist eine Weboberfläche, die das **auf deinem Server installierte ngin
 - **IP-Whitelists**: einen Proxy oder eine Site auf bestimmte Adressen beschränken.
 - **Let's-Encrypt-Zertifikate**: sie beziehen, erneuern und löschen.
 
+Außerdem zeigt es [woher dein Traffic kommt](./traffic.md), auf einer Weltkarte aus den nginx-Access-Logs.
+
 Roastgate verwendet nie ein eigenes Format: Es liest und schreibt die normalen nginx-Dateien. Dein `/etc/nginx` bleibt die einzige Quelle der Wahrheit, du kannst die Dateien also weiterhin von Hand bearbeiten und jederzeit aufhören, Roastgate zu nutzen, ohne etwas zu verlieren.
 
 :::warning[Alpha]
@@ -23,12 +25,12 @@ Roastgate befindet sich in den Alpha-Versionen `0.x`: Einstellungen, das Datenba
 
 ## Was es verwaltet
 
-| Bereich                  | Inhalt              | Ort                          | Aktiv, wenn                                      |
-|--------------------------|---------------------|------------------------------|--------------------------------------------------|
-| Reverse Proxies          | `server`-Blöcke     | `conf.d/<name>.conf`         | die Datei auf `.conf` endet (nicht `.conf.disabled`) |
-| Sites                    | `server`-Blöcke     | `sites-available/<name>`     | ein Symlink in `sites-enabled/` existiert        |
-| Whitelists               | `allow <ip>;`-Zeilen| `whitelists/<name>.conf`     | eine Konfiguration sie per `include` einbindet   |
-| Zertifikate              | Let's Encrypt       | `/etc/letsencrypt`           | eine Konfiguration darauf verweist               |
+| Bereich         | Inhalt               | Ort                      | Aktiv, wenn                                          |
+| --------------- | -------------------- | ------------------------ | ---------------------------------------------------- |
+| Reverse Proxies | `server`-Blöcke      | `conf.d/<name>.conf`     | die Datei auf `.conf` endet (nicht `.conf.disabled`) |
+| Sites           | `server`-Blöcke      | `sites-available/<name>` | ein Symlink in `sites-enabled/` existiert            |
+| Whitelists      | `allow <ip>;`-Zeilen | `whitelists/<name>.conf` | eine Konfiguration sie per `include` einbindet       |
+| Zertifikate     | Let's Encrypt        | `/etc/letsencrypt`       | eine Konfiguration darauf verweist                   |
 
 Die Verzeichnisstrukturen von Debian und Ubuntu (`conf.d/`, `sites-available/`, `sites-enabled/`) werden unterstützt.
 

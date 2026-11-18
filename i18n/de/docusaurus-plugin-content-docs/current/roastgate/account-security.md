@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 9
 title: Konto und Sicherheit
 description: Zwei-Faktor-Authentifizierung, Passkeys, Sitzungen und wie du sicher auf Roastgate zugreifst.
 ---
@@ -72,9 +72,9 @@ Standardmäßig ist Roastgate nur über einen SSH-Tunnel erreichbar. Um es ohne 
 4. Aktiviere in `docker-compose.yml` beide Variablen und starte mit `docker compose up -d` neu:
 
 ```yaml
-    environment:
-      ROASTGATE_SECURE_COOKIES: "true"
-      ROASTGATE_TRUST_FORWARDED_HEADERS: "true"
+environment:
+  ROASTGATE_SECURE_COOKIES: "true"
+  ROASTGATE_TRUST_FORWARDED_HEADERS: "true"
 ```
 
 Lass das Port-Mapping auf `127.0.0.1:8181`: Dann kann nur dein nginx die Forwarded-Header senden, und die Anmeldebegrenzung sowie die Whitelists sehen deine echte Adresse.

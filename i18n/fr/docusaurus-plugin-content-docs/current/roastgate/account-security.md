@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 9
 title: Compte et sécurité
 description: Authentification à deux facteurs, passkeys, sessions, et comment accéder à Roastgate en toute sécurité.
 ---
@@ -72,9 +72,9 @@ Par défaut, Roastgate n'est joignable que via un tunnel SSH. Pour l'ouvrir dans
 4. Dans `docker-compose.yml`, activez les deux variables et redémarrez avec `docker compose up -d` :
 
 ```yaml
-    environment:
-      ROASTGATE_SECURE_COOKIES: "true"
-      ROASTGATE_TRUST_FORWARDED_HEADERS: "true"
+environment:
+  ROASTGATE_SECURE_COOKIES: "true"
+  ROASTGATE_TRUST_FORWARDED_HEADERS: "true"
 ```
 
 Gardez le mappage de port sur `127.0.0.1:8181` : ainsi, seul votre nginx peut envoyer les en-têtes de transfert, et la limitation des connexions comme les listes blanches voient votre véritable adresse.

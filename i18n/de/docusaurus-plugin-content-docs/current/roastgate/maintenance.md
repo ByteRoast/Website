@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 11
 title: Wartung und Fehlerbehebung
 description: Aktualisieren, sichern, Zugang wiederherstellen, deinstallieren und häufige Probleme beheben.
 ---
@@ -107,6 +107,11 @@ Führe zuerst einen **Dry Run** aus. Die meisten Fehler kommen daher, dass:
 - nginx auf Port 80 nicht für die Domain antwortet;
 - der Server-Block den ACME-Webroot nicht ausliefert: Kreuze im Assistenten **Let the Let's Encrypt validation through** an;
 - eine Whitelist oder ein `return` in einer handgeschriebenen Konfiguration `/.well-known/acme-challenge/` blockiert.
+
+### Die Traffic-Karte ist leer
+
+- **Gar keine Anfragen**: Die Logs sind nicht eingehängt. Füge `/var/log/nginx:/var/log/nginx:ro` zu den Volumes von `docker-compose.yml` hinzu und führe dann `docker compose up -d` aus. Prüfe auch, ob deine Sites in `access.log` loggen, siehe [Welche Logs gelesen werden](./traffic.md#which-logs-are-read).
+- **Anfragen, aber alle nicht lokalisiert**: Die GeoIP-Datenbank fehlt. Setze `ROASTGATE_GEOIP_AUTO_UPDATE=true` und warte fünf Minuten, oder [kopiere sie von Hand](./traffic.md#by-hand).
 
 ### Die Seite reagiert nicht mehr
 

@@ -54,6 +54,7 @@ services:
       - /etc/nginx:/etc/nginx
       - /etc/letsencrypt:/etc/letsencrypt
       - /var/www/certbot:/var/www/certbot
+      - /var/log/nginx:/var/log/nginx:ro
       - roastgate-data:/data
 
 volumes:
@@ -65,12 +66,13 @@ volumes:
 - **The port is bound to `127.0.0.1`**: Roastgate is not reachable from the internet. Keep it that way, see [Reaching Roastgate](#reaching-roastgate).
 - **The volumes**:
 
-| Host path                                | Purpose                                                        |
-|------------------------------------------|----------------------------------------------------------------|
-| `/etc/nginx`                             | the nginx configuration Roastgate reads and writes             |
-| `/etc/letsencrypt`                       | certificates (read, and written by the embedded certbot)       |
-| `/var/www/certbot`                       | ACME webroot used by the Let's Encrypt challenge               |
-| `roastgate-data` (named volume, `/data`) | the SQLite database and the keys that encrypt session cookies  |
+| Host path                                | Purpose                                                         |
+| ---------------------------------------- | --------------------------------------------------------------- |
+| `/etc/nginx`                             | the nginx configuration Roastgate reads and writes              |
+| `/etc/letsencrypt`                       | certificates (read, and written by the embedded certbot)        |
+| `/var/www/certbot`                       | ACME webroot used by the Let's Encrypt challenge                |
+| `/var/log/nginx` (read-only)             | the nginx access logs, read by the [Traffic](./traffic.md) page |
+| `roastgate-data` (named volume, `/data`) | the SQLite database and the keys that encrypt session cookies   |
 
 If your nginx or webroot live elsewhere, change the **left side** of these mounts and enter the same paths during the setup.
 
@@ -80,12 +82,12 @@ The commented environment variables of the compose file are described in [Settin
 
 The image is published on `ghcr.io/byteroast/roastgate` with these tags:
 
-| Tag                       | Follows                                                                                       |
-|---------------------------|-----------------------------------------------------------------------------------------------|
-| `latest`                  | the `main` branch                                                                             |
-| `0.1.0`, `0.1.0-alpha.1`… | a release                                                                                     |
-| `0.1`, `1.2`…             | the latest stable release of that minor version (pre-releases such as alphas don't move it)   |
-| `dev`                     | every push to the `dev` branch (unstable)                                                     |
+| Tag                       | Follows                                                                                     |
+| ------------------------- | ------------------------------------------------------------------------------------------- |
+| `latest`                  | the `main` branch                                                                           |
+| `0.1.0`, `0.1.0-alpha.1`… | a release                                                                                   |
+| `0.1`, `1.2`…             | the latest stable release of that minor version (pre-releases such as alphas don't move it) |
+| `dev`                     | every push to the `dev` branch (unstable)                                                   |
 
 To stay on one version, replace `latest` with a release tag in `docker-compose.yml`.
 

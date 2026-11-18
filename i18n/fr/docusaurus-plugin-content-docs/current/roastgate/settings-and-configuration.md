@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+sidebar_position: 10
 title: Réglages et configuration
 description: La page Settings et les variables d'environnement du conteneur.
 ---
@@ -35,13 +35,15 @@ Affiche le compte avec lequel vous êtes connecté, la version de Roastgate, la 
 
 Définissez-les dans la section `environment` de `docker-compose.yml`, puis lancez `docker compose up -d`. Toutes sont optionnelles.
 
-| Variable                            | Valeur par défaut    | Rôle                                                                                         |
-|-------------------------------------|----------------------|----------------------------------------------------------------------------------------------|
-| `ROASTGATE_SETUP_TOKEN`             | aléatoire à chaque démarrage | jeton d'installation fixe, 16 caractères ou plus                                     |
-| `ROASTGATE_SECURE_COOKIES`          | `false`              | marque le cookie de session `Secure` : activez-le lorsque vous accédez à Roastgate en HTTPS  |
-| `ROASTGATE_TRUST_FORWARDED_HEADERS` | `false`              | lit l'adresse du client depuis `X-Forwarded-For` / `-Proto` : uniquement derrière votre propre reverse proxy |
-| `ROASTGATE_DATA_DIR`                | `/data`              | emplacement de `roastgate.db` (montez-y un volume)                                           |
-| `ROASTGATE_HOST_EXEC`               | `nsenter`            | `nsenter` exécute les commandes dans les namespaces de l'hôte, `direct` les exécute dans le conteneur (développement) |
-| `TZ`                                | `Europe/Paris` dans le fichier compose | fuseau horaire des dates affichées dans l'interface                        |
+| Variable                            | Valeur par défaut                      | Rôle                                                                                                                                  |
+| ----------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `ROASTGATE_SETUP_TOKEN`             | aléatoire à chaque démarrage           | jeton d'installation fixe, 16 caractères ou plus                                                                                      |
+| `ROASTGATE_SECURE_COOKIES`          | `false`                                | marque le cookie de session `Secure` : activez-le lorsque vous accédez à Roastgate en HTTPS                                           |
+| `ROASTGATE_TRUST_FORWARDED_HEADERS` | `false`                                | lit l'adresse du client depuis `X-Forwarded-For` / `-Proto` : uniquement derrière votre propre reverse proxy                          |
+| `ROASTGATE_DATA_DIR`                | `/data`                                | emplacement de `roastgate.db` (montez-y un volume)                                                                                    |
+| `ROASTGATE_HOST_EXEC`               | `nsenter`                              | `nsenter` exécute les commandes dans les namespaces de l'hôte, `direct` les exécute dans le conteneur (développement)                 |
+| `ROASTGATE_GEOIP_AUTO_UPDATE`       | `false`                                | télécharge la base de villes DB-IP pour la page [Trafic](./traffic.md#the-geoip-database) et la tient à jour (environ 60 Mo par mois) |
+| `ROASTGATE_NGINX_LOG_DIR`           | `/var/log/nginx`                       | dossier où sont lus les logs d'accès nginx                                                                                            |
+| `TZ`                                | `Europe/Paris` dans le fichier compose | fuseau horaire des dates affichées dans l'interface                                                                                   |
 
 Voir [Accéder à Roastgate via nginx](./account-security.md#reach-roastgate-through-nginx) pour savoir quand activer les options de cookie et d'en-têtes.

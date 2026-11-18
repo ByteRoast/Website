@@ -8,10 +8,10 @@ description: Create, edit, enable and disable reverse proxies and static sites, 
 
 Both pages work the same way. They only differ by what they hold and how a file is enabled:
 
-| Page                | Holds                                         | Files              | Disabling…                                         |
-|---------------------|-----------------------------------------------|--------------------|----------------------------------------------------|
-| **Reverse proxies** | domains forwarded to an application           | `conf.d/*.conf`    | renames the file to `.conf.disabled`               |
-| **Sites**           | static files served by nginx                  | `sites-available/` | removes the symlink in `sites-enabled/`            |
+| Page                | Holds                               | Files              | Disabling…                              |
+| ------------------- | ----------------------------------- | ------------------ | --------------------------------------- |
+| **Reverse proxies** | domains forwarded to an application | `conf.d/*.conf`    | renames the file to `.conf.disabled`    |
+| **Sites**           | static files served by nginx        | `sites-available/` | removes the symlink in `sites-enabled/` |
 
 ## The list
 
@@ -40,17 +40,17 @@ Describe the proxy or the site in a form and Roastgate writes the nginx configur
 ### Essentials
 
 | Field                       | Reverse proxy | Site | Notes                                                                                     |
-|-----------------------------|:-------------:|:----:|-------------------------------------------------------------------------------------------|
-| File name                   | ✓             | ✓    | Optional: the first domain is used when left empty. Proxies get the `.conf` extension.    |
-| Domain names                | ✓             | ✓    | One per line or separated by spaces: `app.example.com www.example.com *.example.com`      |
-| Forward to                  | ✓             |      | The application, for example `http://127.0.0.1:3000`. Use `https://` if it speaks TLS.    |
-| Support WebSockets          | ✓             |      | Adds the `Upgrade` and `Connection` headers.                                              |
-| Timeout (seconds)           | ✓             |      | Empty keeps nginx's 60 s.                                                                 |
-| Root directory              |               | ✓    | The folder that holds your files, **as nginx sees it on the host**.                       |
-| Single page application     |               | ✓    | Unknown paths serve `index.html` (React, Vue, Angular…).                                  |
-| Cache static assets         |               | ✓    | Browsers cache static assets for 30 days.                                                 |
-| Browsable directory listing |               | ✓    | Lists the files of folders without an index, see [Directory listing](#directory-listing). |
-| Maximum upload size         | ✓             | ✓    | Empty keeps nginx's `1m`. `0` removes the limit.                                          |
+| --------------------------- | :-----------: | :--: | ----------------------------------------------------------------------------------------- |
+| File name                   |       ✓       |  ✓   | Optional: the first domain is used when left empty. Proxies get the `.conf` extension.    |
+| Domain names                |       ✓       |  ✓   | One per line or separated by spaces: `app.example.com www.example.com *.example.com`      |
+| Forward to                  |       ✓       |      | The application, for example `http://127.0.0.1:3000`. Use `https://` if it speaks TLS.    |
+| Support WebSockets          |       ✓       |      | Adds the `Upgrade` and `Connection` headers.                                              |
+| Timeout (seconds)           |       ✓       |      | Empty keeps nginx's 60 s.                                                                 |
+| Root directory              |               |  ✓   | The folder that holds your files, **as nginx sees it on the host**.                       |
+| Single page application     |               |  ✓   | Unknown paths serve `index.html` (React, Vue, Angular…).                                  |
+| Cache static assets         |               |  ✓   | Browsers cache static assets for 30 days.                                                 |
+| Browsable directory listing |               |  ✓   | Lists the files of folders without an index, see [Directory listing](#directory-listing). |
+| Maximum upload size         |       ✓       |  ✓   | Empty keeps nginx's `1m`. `0` removes the limit.                                          |
 
 :::caution[Path in "Forward to"]
 If the destination has a path, it must end with a slash: `http://backend/app/`. Without it, nginx glues the path to the request.
@@ -70,24 +70,25 @@ Roastgate reads the modules your nginx loads (`nginx -T`) and only offers the li
   ```
 
   Then reopen the wizard.
+
 - **Modules unknown** (nginx could not be asked): the switch stays available, and `nginx -t` has the last word when you save.
 
 Once the switch is on, the listing has its own options:
 
-| Option                             | Default            | Notes                                                                                     |
-|------------------------------------|--------------------|-------------------------------------------------------------------------------------------|
-| Default sort                       | Name               | By name, size or date, ascending or descending.                                           |
-| Case-sensitive sort                | on                 | Only offered when your build of the module knows it, see below.                           |
-| Directories first                  | on                 | Folders are listed before files.                                                          |
-| Exact file sizes                   | on                 | Off rounds the sizes to KiB, MiB…                                                         |
-| Local time                         | off                | Off shows dates in UTC.                                                                   |
-| Show the path above the listing    | on                 | Can only be turned off when a header file is set.                                         |
-| Show dotfiles                      | off                | Needs **Block TRACE and dotfiles** off: that protection refuses every path with a dot.    |
-| Hide symlinks                      | off                |                                                                                           |
-| Hide the parent directory link     | off                |                                                                                           |
-| Header file, Footer file, CSS file | empty              | URL paths such as `/.nginxy/header.html`. The site itself must serve these files.         |
-| Ignored names                      | empty              | One name per line: files and folders with these names are hidden.                         |
-| Time Format                        | `%Y-%b-%d %H:%M`   | `strftime` specifiers such as `%d`, `%m`, `%Y`, `%H`, `%M`.                               |
+| Option                             | Default          | Notes                                                                                  |
+| ---------------------------------- | ---------------- | -------------------------------------------------------------------------------------- |
+| Default sort                       | Name             | By name, size or date, ascending or descending.                                        |
+| Case-sensitive sort                | on               | Only offered when your build of the module knows it, see below.                        |
+| Directories first                  | on               | Folders are listed before files.                                                       |
+| Exact file sizes                   | on               | Off rounds the sizes to KiB, MiB…                                                      |
+| Local time                         | off              | Off shows dates in UTC.                                                                |
+| Show the path above the listing    | on               | Can only be turned off when a header file is set.                                      |
+| Show dotfiles                      | off              | Needs **Block TRACE and dotfiles** off: that protection refuses every path with a dot. |
+| Hide symlinks                      | off              |                                                                                        |
+| Hide the parent directory link     | off              |                                                                                        |
+| Header file, Footer file, CSS file | empty            | URL paths such as `/.nginxy/header.html`. The site itself must serve these files.      |
+| Ignored names                      | empty            | One name per line: files and folders with these names are hidden.                      |
+| Time Format                        | `%Y-%b-%d %H:%M` | `strftime` specifiers such as `%d`, `%m`, `%Y`, `%H`, `%M`.                            |
 
 :::info[Header and footer]
 The header and the footer also need nginx's `http_addition_module`, included in the Debian and Ubuntu packages. When their files live in a folder starting with a dot (a theme in `/.nginxy/`, for example), the wizard lets that folder through the dotfile protection.
@@ -123,12 +124,12 @@ Restrict the proxy or the site to the addresses of one or more [whitelists](./wh
 
 **Visitors outside the whitelists** chooses what everybody else gets:
 
-| Choice                     | Answer                       | When to use it                                         |
-|----------------------------|------------------------------|--------------------------------------------------------|
-| **Forbidden** (default)    | `403`                        | nginx's usual behaviour                                |
-| **Not found**              | `404`                        | hides that the site exists                             |
-| **Close connection**       | `444`                        | nginx drops the connection without sending anything    |
-| **Redirect**               | `302` to **Redirect to**     | send visitors to your main website, for example        |
+| Choice                  | Answer                   | When to use it                                      |
+| ----------------------- | ------------------------ | --------------------------------------------------- |
+| **Forbidden** (default) | `403`                    | nginx's usual behaviour                             |
+| **Not found**           | `404`                    | hides that the site exists                          |
+| **Close connection**    | `444`                    | nginx drops the connection without sending anything |
+| **Redirect**            | `302` to **Redirect to** | send visitors to your main website, for example     |
 
 The answer replaces **every** `403` of the server, not only the whitelist ones: blocked dotfiles and folders without an index get it too. The Let's Encrypt challenge stays reachable for everyone.
 

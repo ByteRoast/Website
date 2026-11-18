@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 11
 title: Maintenance and troubleshooting
 description: Update, back up, recover access, uninstall, and fix common problems.
 ---
@@ -107,6 +107,11 @@ Run a **dry run** first. Most failures come from:
 - nginx not answering on port 80 for the domain;
 - the server block not serving the ACME webroot: tick **Let the Let's Encrypt validation through** in the wizard;
 - a whitelist or a `return` blocking `/.well-known/acme-challenge/` in a hand-written config.
+
+### The traffic map is empty
+
+- **No requests at all**: the logs are not mounted. Add `/var/log/nginx:/var/log/nginx:ro` to the volumes of `docker-compose.yml`, then run `docker compose up -d`. Also check that your sites log to `access.log`, see [Which logs are read](./traffic.md#which-logs-are-read).
+- **Requests, but all of them unlocated**: the GeoIP database is missing. Set `ROASTGATE_GEOIP_AUTO_UPDATE=true` and wait five minutes, or [copy it by hand](./traffic.md#by-hand).
 
 ### The page stops responding
 
